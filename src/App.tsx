@@ -40,11 +40,13 @@ const AppStream = () => {
     });
     
     socket.on("chats", (data) => {
-      console.log("chats");
-      console.log(data);
+     
       setLoading(false);
       setQR(null);
-      setChats(data);
+      if(data!=null){
+
+        setChats(data);
+      }
     });
 }, [data.uuid]);
 
