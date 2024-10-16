@@ -1,5 +1,4 @@
 {
-  "homepage": "time-vault-assinatura.github.io/frontend-whats-automation/",
   "name": "whats-automation",
   "private": true,
   "version": "0.0.0",
@@ -8,8 +7,6 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
     "preview": "vite preview"
   },
   "dependencies": {

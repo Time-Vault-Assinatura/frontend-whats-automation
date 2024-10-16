@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 
 import { v4 as uuidv4 } from "uuid";
 
-const SOCKET_SERVER_URL = process.env.REACT_APP_BACKEND_URL;
+const SOCKET_SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
 const AppStream = () => {
   const [chats, setChats] = useState<any[]>([]);
