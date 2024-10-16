@@ -34,24 +34,24 @@ const AppStream = () => {
       withCredentials: true,
     });
 
-    socket.on("qr", (data: any) => {
-      setQR(data);
-      setLoading(false);
+    socket.on("qr", (payload: any) => {
+      const { to, qr } = payload;
+      if (to == data.uuid) {
+        setQR(qr);
+        setLoading(false);
+      }
     });
-    
+
     socket.on("chats", (data) => {
-     
       setLoading(false);
       setQR(null);
-      if(data!=null){
-
+      if (data != null) {
         setChats(data);
       }
     });
-}, [data.uuid]);
+  }, [data.uuid]);
 
   const sendGroupData = async (message: FormData) => {
-  
     message.append("authId", data.uuid);
 
     const res = await fetch(`${SOCKET_SERVER_URL}/sendMessages`, {
@@ -64,7 +64,6 @@ const AppStream = () => {
     } else {
       alert("Falha ao enviar as mensagens.");
     }
-
   };
 
   return (
