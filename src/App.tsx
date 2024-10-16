@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import QrCodePage from "./qrcode";
 import ChatPage from "./chat";
 import { io } from "socket.io-client";
 
 import { v4 as uuidv4 } from "uuid";
 
-const SOCKET_SERVER_URL = "http://localhost:3000";
+const SOCKET_SERVER_URL = process.env.REACT_APP_BACKEND_URL;
+
 const AppStream = () => {
   const [chats, setChats] = useState<any[]>([]);
   const [qr, setQR] = useState<any>(null);
