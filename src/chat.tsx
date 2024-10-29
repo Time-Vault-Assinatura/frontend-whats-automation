@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 export default function ChatPage({
   onSubmit,
   allChats,
+  isLoading,
 }: {
   onSubmit: (message: any) => void;
   allChats: any[];
+  isLoading: boolean;
 }) {
   const [messageText, setTextMessage] = useState<string>("");
   const [selectedChats, setSelectedChats] = useState<any[]>([]);
@@ -32,23 +34,23 @@ export default function ChatPage({
   };
 
   const onFormSubmit = () => {
-    if(!selectedChats.length) {
+    if (!selectedChats.length) {
       alert("Selecione pelo menos um chat");
       return;
     }
-    if(file && !selectedFileType) {
+    if (file && !selectedFileType) {
       alert("Selecione um tipo de arquivo");
       return;
     }
-    
+
     const formData = new FormData();
 
     if (file) {
       formData.append("file", file);
     }
     formData.append("text", messageText);
-    selectedChats.forEach((item,) => {
-      formData.append(`chats[]`, item); 
+    selectedChats.forEach((item) => {
+      formData.append(`chats[]`, item);
     });
 
     formData.append("fileType", selectedFileType);
@@ -196,13 +198,17 @@ export default function ChatPage({
           </div>
         </div>
         <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={onFormSubmit}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
-          >
-            Enviar
-          </button>
+          {isLoading ? (
+            <p>Enviando...</p>
+          ) : (
+            <button
+              type="button"
+              onClick={onFormSubmit}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+            >
+              Enviar
+            </button>
+          )}
         </div>
       </div>
     </div>

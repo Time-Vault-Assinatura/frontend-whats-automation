@@ -11,6 +11,7 @@ const AppStream = () => {
   const [chats, setChats] = useState<any[]>([]);
   const [qr, setQR] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [sending, setSending] = useState<boolean>(false);
 
   const generateAndStoreUUID = () => {
     let storedUUID = localStorage.getItem("wpp_auth_uuid");
@@ -54,11 +55,14 @@ const AppStream = () => {
   const sendGroupData = async (message: FormData) => {
     message.append("authId", data.uuid);
 
+    setSending(true);
+
     const res = await fetch(`${SOCKET_SERVER_URL}/sendMessages`, {
       method: "POST",
       body: message,
     });
 
+    setSending(false);
     if (res.ok) {
       alert("Mensagens enviadas com sucesso");
     } else {
@@ -76,7 +80,11 @@ const AppStream = () => {
       ) : qr ? (
         <QrCodePage qrCode={qr} />
       ) : (
-        <ChatPage allChats={chats} onSubmit={sendGroupData} />
+        <ChatPage
+          isLoading={sending}
+          allChats={chats}
+          onSubmit={sendGroupData}
+        />
       )}
     </div>
   );
