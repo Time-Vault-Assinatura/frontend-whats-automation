@@ -14,12 +14,9 @@ export default function ChatPage({
   const [selectedFileType, setSelectedFileType] = useState<string>("");
   const [file, setFile] = useState(null);
   const [chats, setChats] = useState<any[]>([]);
-  const [extraChats, setExtraChats] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    setExtraChats(allChats);
-    
     // Reaplica o filtro se houver uma busca ativa
     if (searchQuery === "") {
       setChats(allChats);
