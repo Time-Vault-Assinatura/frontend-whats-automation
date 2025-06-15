@@ -18,21 +18,22 @@ export default function ChatPage({
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    setChats(allChats);
     setExtraChats(allChats);
-  }, [allChats]);
+    
+    // Reaplica o filtro se houver uma busca ativa
+    if (searchQuery === "") {
+      setChats(allChats);
+    } else {
+      const filteredChats = allChats.filter((chat) =>
+        chat.subject.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setChats(filteredChats);
+    }
+  }, [allChats, searchQuery]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    const filteredChats = extraChats.filter((chat) =>
-      chat.subject.toLowerCase().includes(query.toLowerCase())
-    );
-
-    if (query === "") {
-      setChats(extraChats);
-    } else {
-      setChats(filteredChats);
-    }
+    // A filtragem será feita automaticamente pelo useEffect
   };
 
   // Função para selecionar todos os chats filtrados
